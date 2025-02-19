@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Медицинская форма</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 p-4 md:p-8 text-sm md:text-base">
+    <div class="max-w-7xl mx-auto bg-white rounded-lg shadow-lg p-4 md:p-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+            <h1 class="text-xl md:text-2xl font-bold text-gray-800">Работа на педиатрическом участке</h1>
+            <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
+                <div class="date-container w-full md:w-auto">
+                    <label class="block text-sm font-medium text-gray-700">Дата:</label>
+                    <input type="date" id="currentDate" class="mt-1 form-input rounded-md shadow-sm w-full">
+                </div>
+                <div class="period-container w-full md:w-auto">
+                    <label class="block text-sm font-medium text-gray-700">Период:</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="periodFrom" placeholder="с" class="mt-1 form-input rounded-md shadow-sm flex-1 md:w-24">
+                        <input type="text" id="periodTo" placeholder="по" class="mt-1 form-input rounded-md shadow-sm flex-1 md:w-24">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:flex gap-2 md:gap-4 mb-6">
+            <button id="calculateBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-2 md:px-4 py-2 rounded-md transition-colors text-sm md:text-base">
+                Рассчитать
+            </button>
+            <button id="clearBtn" class="bg-gray-500 hover:bg-gray-600 text-white px-2 md:px-4 py-2 rounded-md transition-colors text-sm md:text-base">
+                Очистить поля
+            </button>
+            <button id="randomBtn" class="bg-green-500 hover:bg-green-600 text-white px-2 md:px-4 py-2 rounded-md transition-colors text-sm md:text-base">
+                Случайные значения
+            </button>
+            <button id="exportPdfBtn" class="bg-purple-500 hover:bg-purple-600 text-white px-2 md:px-4 py-2 rounded-md transition-colors text-sm md:text-base">
+                Экспорт в PDF
+            </button>
+        </div>
+
+        <div class="overflow-x-auto -mx-4 md:mx-0">
+            <div class="inline-block min-w-full align-middle">
+                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-300">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="py-2 px-1 md:p-2 text-left text-xs md:text-sm font-semibold text-gray-900 w-[40%]">Перечень практических умений</th>
+                                <th class="py-2 px-1 md:p-2 text-center text-xs md:text-sm font-semibold text-gray-900 w-[10%]">№ умен</th>
+                                <th class="py-2 px-1 md:p-2 text-center text-xs md:text-sm font-semibold text-gray-900 w-[12.5%]">План</th>
+                                <th class="py-2 px-1 md:p-2 text-center text-xs md:text-sm font-semibold text-gray-900 w-[15%]">Выполнено</th>
+                                <th class="py-2 px-1 md:p-2 text-center text-xs md:text-sm font-semibold text-gray-900 w-[10%]">Коэффициент</th>
+                                <th class="py-2 px-1 md:p-2 text-center text-xs md:text-sm font-semibold text-gray-900 w-[12.5%]">Коэфф. выполнения</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                            <!-- 1. Число детей принятых в поликлинике -->
+                            <tr class="font-bold hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">1. Число детей принятых в поликлинике</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">1</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">380</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="1"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">×</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">×</td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-4 md:pl-8">А) здоровых детей</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">250</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="1A"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">×</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">×</td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-6 md:pl-12">- раннего возраста</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">80</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="1A1"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">2</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-6 md:pl-12">- старшего возраста</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">70</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="1A2"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">1</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-4 md:pl-8">Б) «больных» детей</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">130</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="1B"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">×</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">×</td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-6 md:pl-12">- с соматическими заболеваниями</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">70</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="1B1"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">1</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-6 md:pl-12">- дети «Д» группы (хроники)</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">60</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="1B2"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">1</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <!-- 2. Количество детей, обслуженных на дому -->
+                            <tr class="font-bold hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">2. Количество детей, обслуженных на дому</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">2</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">215</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="2"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">×</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">×</td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-4 md:pl-8">А) с соматическими заболеваниями</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">25</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="2A"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">1</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-4 md:pl-8">Б) с инфекционными заболеваниями</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">90</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="2B"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">1</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-4 md:pl-8">В) патронаж к новорожденным</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">50</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="2C"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">3</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-4 md:pl-8">Г) патронаж к детям первого года жизни</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">50</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="2D"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">2</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <!-- Items 3-20 -->
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">3. Комплексная оценка состояния здоровья детей</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">3</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">380</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="3"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">10</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">4. Расчет питания доношенному и недоношенному ребенку 1года жизни</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">4</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">80</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="4"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">5</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">5. Оценка показателей КАК</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">5</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">150</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="5"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">3</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">6. Оценка анализов мочи</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">6</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">150</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="6"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">3</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">7. Оценка результатов УЗИ внутренних органов, гениталий, щитовидной железы</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">7</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">100</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="7"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">4</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">8. Оценка результатов НСГ</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">8</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">80</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="8"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">5</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">9. Оценка результатов УЗИ тазобедр.суставов</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">9</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">80</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="9"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">5</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">10. Проведение и оценка результатов аудиологического скрининга</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">10</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">80</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="10"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">3</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">11. Оценка R-гр органов грудной клетки</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">11</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">25</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="11"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">5</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">12. Планирование профилактических прививок</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">12</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">250</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="12"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">5</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">13. Обоснование противопоказаний к проведению профилактических прививок</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">13</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">15</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="13"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">5</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">14. Определение физкультурной группы</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">14</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">380</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="14"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">5</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">15. Оформление листка нетрудоспособности родителям по уходу за болеющим ребенком</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">15</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">90</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="15"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">8</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <!-- 16. Оформление мед.документов -->
+                            <tr class="font-bold hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">16. Оформление мед.документов ребенку:</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">16</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">815</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="16"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">×</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">×</td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-4 md:pl-8">- на посещение ДДУ после болезни</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">100</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="16A"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">1</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-4 md:pl-8">- поступающему в детский сад (026/У)</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">25</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="16B"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">2</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-4 md:pl-8">-на госпитализацию/консультацию (057/У)</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">25</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="16C"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">1</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-4 md:pl-8">-справка для получения санаторно-курортной путевки</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">25</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="16D"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">2</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-4 md:pl-8">-санаторно-курортная карта (071/У)</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">15</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="16E"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">2</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-4 md:pl-8">- оформление талона амбулаторного пациента (ф 025)</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">595</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="16F"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">2</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm pl-4 md:pl-8">-оформление экстренного извещения (058/У)</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">30</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="16G"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">1</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">17. Оформление рецептов на бесплатное молочное питание (смеси и т.д.)</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">17</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">30</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="17"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">2</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">18. Оформление рецептов на льготное лекарственное обеспечение</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">18</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">50</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="18"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">2</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">19. Оформление дородовых патронажей к беременным женщинам</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">19</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">25</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="19"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">2</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-2 px-1 md:p-2 text-xs md:text-sm">20. Оформление ф 30 в программном комплексе «Диспансеризация несовершеннолетних, детей-сирот и опекаемых»</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">20</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">50</td>
+                                <td class="py-2 px-1 md:p-2"><input type="number" class="form-input w-full text-xs md:text-sm" data-id="20"></td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">5</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm result"></td>
+                            </tr>
+
+                            <!-- Итоговая строка -->
+                            <tr class="font-bold bg-gray-100">
+                                <td colspan="3" class="py-2 px-1 md:p-2 text-xs md:text-sm">Коэффициент выполненных и недовыполненных умений и навыков</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">×</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm">100</td>
+                                <td class="py-2 px-1 md:p-2 text-center text-xs md:text-sm" id="totalCoefficient"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

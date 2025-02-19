@@ -1,0 +1,335 @@
+/* General styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.5;
+}
+
+/* Form input styling */
+.form-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    background-color: #fff;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-input:disabled,
+.form-input[readonly] {
+    background-color: #f8fafc;
+    cursor: not-allowed;
+}
+
+/* Table styling */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+}
+
+td, th {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+/* Zebra striping for better readability */
+tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* Hover effect on table rows */
+tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Main category rows styling */
+tr.font-bold {
+    background-color: #f1f5f9;
+}
+
+tr.font-bold td {
+    font-weight: 600;
+}
+
+/* Button styling */
+button {
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* Result cell styling */
+td.result {
+    font-weight: 500;
+    color: #1e40af;
+}
+
+/* Total coefficient styling */
+#totalCoefficient {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #1e40af;
+}
+
+/* Date and period inputs styling */
+.date-container, .period-container {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+input[type="date"] {
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    min-width: 140px;
+}
+
+/* Animation for coefficient updates */
+.result.updated {
+    animation: highlight 1s ease-out;
+}
+
+@keyframes highlight {
+    0% {
+        background-color: #93c5fd;
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .table-container {
+        margin: 0 -1rem;
+    }
+    
+    td, th {
+        padding: 0.75rem;
+    }
+    
+    .form-input {
+        padding: 0.375rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    body {
+        background-color: white;
+    }
+    
+    .max-w-7xl {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    button {
+        display: none;
+    }
+    
+    table {
+        box-shadow: none;
+    }
+    
+    .form-input {
+        border: none;
+        padding: 0;
+    }
+    
+    td, th {
+        border-color: #000;
+    }
+}
+
+/* Nested items indentation */
+td[class*="pl-8"] {
+    color: #4a5568;
+}
+
+td[class*="pl-12"] {
+    color: #718096;
+}
+
+/* Input validation styling */
+.form-input.error {
+    border-color: #ef4444;
+    background-color: #fff5f5;
+}
+
+.form-input.success {
+    border-color: #10b981;
+    background-color: #f0fdf4;
+}
+
+/* Tooltip styling */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem;
+    background-color: #1e293b;
+    color: white;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+/* Loading state */
+.loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Мобильные адаптации */
+@media screen and (max-width: 768px) {
+    /* Контейнер */
+    .max-w-7xl {
+        padding: 0.5rem !important;
+    }
+
+    /* Заголовок и дата */
+    .flex.justify-between {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* Кнопки */
+    .flex.gap-4.mb-6 {
+        flex-wrap: wrap;
+        gap: 0.5rem !important;
+    }
+
+    button {
+        width: calc(50% - 0.25rem);
+        font-size: 0.875rem;
+        padding: 0.5rem !important;
+    }
+
+    /* Таблица */
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        font-size: 0.875rem;
+    }
+
+    td, th {
+        padding: 0.5rem !important;
+        white-space: normal;
+        min-width: 80px;
+    }
+
+    /* Первая колонка с описанием */
+    td:first-child {
+        min-width: 200px;
+    }
+
+    /* Инпуты */
+    .form-input {
+        padding: 0.25rem !important;
+        font-size: 0.875rem;
+    }
+
+    /* Дата и период */
+    .date-container, .period-container {
+        width: 100%;
+    }
+
+    .period-container .flex {
+        flex-direction: row;
+    }
+
+    input[type="date"],
+    input[type="text"] {
+        width: 100%;
+        font-size: 0.875rem;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media screen and (max-width: 480px) {
+    button {
+        width: 100%;
+    }
+
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    td:first-child {
+        min-width: 150px;
+    }
+}
+
+/* Улучшение touch-взаимодействия */
+@media (hover: none) {
+    .form-input {
+        font-size: 16px; /* Предотвращает зум на iOS */
+    }
+
+    button {
+        touch-action: manipulation;
+    }
+
+    /* Увеличиваем область касания */
+    input[type="number"] {
+        min-height: 44px;
+    }
+}
